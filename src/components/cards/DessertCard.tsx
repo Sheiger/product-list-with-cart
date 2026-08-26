@@ -20,7 +20,7 @@ function DessertCard({data, quantity, onIncrease, onDecrease}: DessertProps) {
             <div className="flex flex-col pt-8">
                 <span className="text-yellow-700">{data.category}</span>
                 <span className="text-lg text-amber-900 font-semibold">{data.name}</span>
-                <span className="text-lg text-amber-600 font-semibold">${data.price}</span>
+                <span className="text-lg text-amber-600 font-semibold">${(data.price).toFixed(2)}</span>
             </div>
         </article>
     )
