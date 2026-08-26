@@ -1,4 +1,6 @@
+import { useState } from "react";
 import type { Product } from "../../data/products";
+import OrderConfirmedModal from "../modals/orderConfirmed";
 
 interface CartProps {
     products: Product[]
@@ -7,6 +9,9 @@ interface CartProps {
 }
 
 const Cart = ({ products, quantities, onRemove }: CartProps) => {
+
+    const [isModalOpen, setIsModalOpen] = useState(false);
+
     const cartItems = products
         .filter((p) => (quantities[p.id] ?? 0) > 0)
         .map((p) => ({ ...p, quantity: quantities[p.id]}))
@@ -69,10 +74,13 @@ const Cart = ({ products, quantities, onRemove }: CartProps) => {
                     <div className="flex justify-center py-3 mb-4 bg-gray-100 rounded-xl text-sm">
                         <p>This is a <b>carbon-neutral</b> delivery</p>
                     </div>
-                    <button className="bg-amber-800 text-white w-full rounded-4xl py-3">Confirm Order</button>
+                    <button onClick={() => setIsModalOpen(true)} className="bg-amber-800 text-white w-full rounded-4xl py-3">Confirm Order</button>
                 </div>
             )}
+
+            {isModalOpen && (<OrderConfirmedModal cartItems={cartItems} total={total} onClose={() => setIsModalOpen(false)} />)}
         </div>
+        
     )
 }
 
