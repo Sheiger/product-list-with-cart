@@ -1,4 +1,4 @@
-import type { Product } from "../../data/products"
+import type { Product } from "../../interface/products"
 import AddToCartButton from "../buttons/AddToCartButton";
 
 interface DessertProps {

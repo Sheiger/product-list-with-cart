@@ -1,8 +1,8 @@
 import DessertCard from "../cards/DessertCard"
-import { products } from "../../data/products"
+import { products } from "../../interface/products"
 import { useReducer } from "react"
 import Cart from "../cart/Cart"
-import quantitiesReducer from "../../cartReducer"
+import quantitiesReducer from "../../hooks/cartReducer"
 
 const Desserts = () => {
 

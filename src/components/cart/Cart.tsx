@@ -1,5 +1,5 @@
 import { useState } from "react";
-import type { Product } from "../../data/products";
+import type { Product } from "../../interface/products";
 import OrderConfirmedModal from "../modals/orderConfirmed";
 
 interface CartProps {
