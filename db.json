@@ -1,0 +1,67 @@
+{
+    "products" : [
+    {
+        "id": 1,
+        "category": "Wafle",
+        "name": "Wafle with Berries",
+        "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTi8iN10XXvjafzfYVORqFaT9f7-7ERXrxg3pwwfF7n3w&s=10",
+        "price": 6.50
+    },
+    {
+        "id": 2,
+        "category": "Creme Brulée",
+        "name": "Vanilla Bean Creme Brulée",
+        "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRdyHEuMTmUpSs-0kPeBeaYJkEwPCyPZL_ImLZZg7eU2w&s=10",
+        "price": 7.00
+    },
+    {
+        "id": 3,
+        "category": "Macaron",
+        "name": "Macaron Mix of Five",
+        "image": "https://img.freepik.com/foto-gratis/vista-superior-grupo-macarons_23-2147984116.jpg?semt=ais_hybrid&w=740&q=80",
+        "price": 8.00
+    },
+    {
+        "id": 4,
+        "category": "Tiramisu",
+        "name": "Classic Tiramisu",
+        "image": "https://img.magnific.com/foto-gratis/pastel-dulce-mesa_140725-1424.jpg?t=st=1787751053~exp=1787754653~hmac=dfe930de486b19a4765e247a9d16944f5e1cc93086f31e4e2f69b6ffb5f9463a&w=1060",
+        "price": 5.50
+    },
+    {
+        "id": 5,
+        "category": "Baklava",
+        "name": "Pistacho Baklava",
+        "image": "https://thumbs.dreamstime.com/b/rollo-de-pistacho-baklava-fistikli-sarma-425051269.jpg",
+        "price": 4.00
+    },
+    {
+        "id": 6,
+        "category": "Pie",
+        "name": "Lemon Meringue Pie",
+        "image": "https://www.tasteofhome.com/wp-content/uploads/2018/01/World-s-Best-Lemon-Pie_EXPS_FT23_4439_JR_1129_1.jpg",
+        "price": 5.00
+    },
+    {
+        "id": 7,
+        "category": "Cake",
+        "name": "Red Velvet Cake",
+        "image": "https://es.cravingsjournal.com/wp-content/uploads/2020/02/mini-torta-red-velvet-2.jpg",
+        "price": 4.50
+    },
+    {
+        "id": 8,
+        "category": "Brownie",
+        "name": "Salted Caramel Brownie",
+        "image": "https://thenovicechefblog.com/wp-content/uploads/2011/09/Salted-Caramel-Brownies-8-600x900.jpeg",
+        "price": 6.50
+    },
+    {
+        "id": 9,
+        "category": "Panna Cotta",
+        "name": "Vanilla Panna Cotta",
+        "image": "https://www.garnishwithlemon.com/wp-content/uploads/2023/04/VANILLA-BEAN-PANNA-COTTA-FEATURED-IMAGE.jpg",
+        "price": 6.50
+    }
+]
+}
