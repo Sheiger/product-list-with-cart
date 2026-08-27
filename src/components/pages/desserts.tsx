@@ -3,6 +3,9 @@ import { useReducer } from "react"
 import DessertCard from "../cards/DessertCard"
 import Cart from "../cart/Cart"
 import quantitiesReducer from "../../hooks/cartReducer"
+import ErrorState from "../states/ErrorState"
+import DessertCardSkeleton from "../skeletons/DessertCardSkeleton"
+import EmptyState from "../states/EmptyState"
 
 const Desserts = () => {
 
@@ -11,7 +14,7 @@ const Desserts = () => {
     const handleRemove = (id: number) => dispatch({ type: "remove", id})
 
     const [quantities, dispatch] = useReducer(quantitiesReducer, {})
-    const { data: products, isLoading, isError } = useProducts()
+    const { data: products, isLoading, isError, refetch } = useProducts()
 
     if (isLoading) return <p>Loading...</p>
     if (isError) return <p>An error occurred while loading the products.</p>
@@ -21,7 +24,18 @@ const Desserts = () => {
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-7xl mx-auto pt-16 px-8">
                 <main className="md:col-span-2">
                     <h1 className="text-4xl font-bold text-amber-900 pb-8">Desserts</h1>
-                    <div className="grid grid-cols-1 md:grid-cols-3 sm:grid-cols-2 gap-x-4 gap-y-8"> 
+                    { isError ? (
+                        <ErrorState onRetry={refetch} />
+                    ) : isLoading ? (
+                        <div className="grid grid-cols-1 md:grid-cols-3 sm:grid-cols-2 gap-x-4 gap-y-8">
+                            { Array.from({ length: 6}).map((_,i) => (
+                                <DessertCardSkeleton key={i} />
+                            ))}
+                        </div>
+                    ) : !products || products.length === 0 ? (
+                        <EmptyState />
+                    ) : (
+                        <div className="grid grid-cols-1 md:grid-cols-3 sm:grid-cols-2 gap-x-4 gap-y-8"> 
                         { (products ?? []).map((data) => (
                             <DessertCard key={data.id} 
                                 data={data}
@@ -30,6 +44,8 @@ const Desserts = () => {
                                 onDecrease={() => handleDecrease(data.id)}/>
                         ))}
                     </div>
+                    )}
+                    
                 </main>
 
                 <aside className="md:col-span-1">
