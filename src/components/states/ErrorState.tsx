@@ -1,3 +1,5 @@
+import { Link } from "react-router-dom"
+
 interface ErrorStateProps {
     onRetry: () => void
 }
@@ -8,9 +10,12 @@ const ErrorState = ({ onRetry }: ErrorStateProps) => {
             <span className="text-ambar-900 font-semibold">
                 An error occurred while loading the products
             </span>
-            <button onClick={onRetry} className="bg-amber-800 text-white rounded-4xl px-6 py-2">  
-                Try again
-            </button>
+            <Link to={`/`}>
+                <button onClick={onRetry} className="bg-amber-800 text-white rounded-4xl px-6 py-2">  
+                    Try again
+                </button>
+            </Link>
+            
         </div>
     )
 }

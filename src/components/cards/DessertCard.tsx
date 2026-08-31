@@ -1,4 +1,5 @@
 import type { Product } from "../../interface/products"
+import { Link } from "react-router-dom"
 import AddToCartButton from "../buttons/AddToCartButton";
 
 interface DessertProps {
@@ -14,10 +15,13 @@ function DessertCard({data, quantity, onIncrease, onDecrease}: DessertProps) {
     return (
         <article className="">
             <div className="relative">
-                <img src={data.image} alt={data.name}
-                className={`rounded-lg w-full aspect-square object-cover
-                ${isInCart ? "border-2 border-amber-700" : "border-2 border-transparent"}`} 
-                ></img>
+                <Link to={`/product/${data.id}`}>
+                    <img src={data.image} alt={data.name}
+                        className={`rounded-lg w-full aspect-square object-cover
+                        ${isInCart ? "border-2 border-amber-700" : "border-2 border-transparent"}`} 
+                    />
+                </Link>
+                
                 <div className="absolute -bottom-4 left-1/2 -translate-x-1/2">
                     <AddToCartButton quantity={quantity} onIncrease={onIncrease} onDecrease={onDecrease}/>
                 </div>
