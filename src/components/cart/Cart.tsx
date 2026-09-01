@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useCartStore } from "../../hooks/cartStore";
+import { useCartStore } from "../../services/cartStore";
 import type { Product } from "../../interface/products";
 import OrderConfirmedModal from "../modals/orderConfirmed";
 
