@@ -1,8 +1,8 @@
 import { useProducts } from "../../hooks/useProducts"
-import { useReducer, useState } from "react"
+import { useState } from "react"
 import DessertCard from "../cards/DessertCard"
 import Cart from "../cart/Cart"
-import quantitiesReducer from "../../hooks/cartReducer"
+import { useCartStore } from "../../hooks/cartStore"
 import ErrorState from "../states/ErrorState"
 import DessertCardSkeleton from "../skeletons/DessertCardSkeleton"
 import EmptyState from "../states/EmptyState"
@@ -13,7 +13,7 @@ import CategoryFilter from "../filters/CategoryFilter"
 
 const Desserts = () => {
 
-    const [quantities, dispatch] = useReducer(quantitiesReducer, {})
+    const {quantities, increase, decrease, remove} = useCartStore()
     const [search, setSearch] = useState("")
     const [category, setCategory] = useState("")
 
@@ -25,10 +25,6 @@ const Desserts = () => {
     })
 
     const { data: categories } = useCategories()
-
-    const handleIncrease = (id: number) => dispatch({ type: "increase", id})
-    const handleDecrease = (id: number) => dispatch({ type: "decrease", id})
-    const handleRemove = (id: number) => dispatch({ type: "remove", id})
 
     return (
         <div className="min-h-screen bg-orange-50">
@@ -56,8 +52,8 @@ const Desserts = () => {
                             <DessertCard key={data.id} 
                                 data={data}
                                 quantity={quantities[data.id] ?? 0}
-                                onIncrease={() => handleIncrease(data.id)}
-                                onDecrease={() => handleDecrease(data.id)}/>
+                                onIncrease={() => increase(data.id)}
+                                onDecrease={() => decrease(data.id)}/>
                         ))}
                     </div>
                     )}
@@ -65,7 +61,7 @@ const Desserts = () => {
                 </main>
 
                 <aside className="md:col-span-1">
-                    <Cart products={products ?? []} quantities={quantities} onRemove={handleRemove}/>
+                    <Cart products={products ?? []} quantities={quantities} onRemove={remove}/>
                 </aside>
 
             </div>     

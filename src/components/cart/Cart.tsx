@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useCartStore } from "../../hooks/cartStore";
 import type { Product } from "../../interface/products";
 import OrderConfirmedModal from "../modals/orderConfirmed";
 
@@ -11,6 +12,7 @@ interface CartProps {
 const Cart = ({ products, quantities, onRemove }: CartProps) => {
 
     const [isModalOpen, setIsModalOpen] = useState(false);
+    const clearCart = useCartStore((state) => state.clearCart)
 
     const cartItems = products
         .filter((p) => (quantities[p.id] ?? 0) > 0)
@@ -23,6 +25,11 @@ const Cart = ({ products, quantities, onRemove }: CartProps) => {
     const cant = cartItems.reduce (
         (sum, item) => sum + item.quantity, 0
     )
+
+    const handleStartNewOrder = () => {
+        setIsModalOpen(false)
+        clearCart();
+    }
 
     return (
         <div className="bg-white p-4">
@@ -78,7 +85,7 @@ const Cart = ({ products, quantities, onRemove }: CartProps) => {
                 </div>
             )}
 
-            {isModalOpen && (<OrderConfirmedModal cartItems={cartItems} total={total} onClose={() => setIsModalOpen(false)} />)}
+            {isModalOpen && (<OrderConfirmedModal cartItems={cartItems} total={total} onClose={handleStartNewOrder} />)}
         </div>
         
     )
