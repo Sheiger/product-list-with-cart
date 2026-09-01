@@ -30,7 +30,7 @@ const ProductDetail = () => {
                     &larr; Volver
             </Link>
             <div className="flex justify-center w-full">
-                <div className="mt-4 grid gap-6 md:grid-cols-2">
+                <div className="mt-4 grid gap-6 md:grid-cols-2 max-w-4xl">
                 <img src={product.image} alt={product.name} className="rounded-2xl w-full" />
                 <div>
                     <p className="text-sm text-yellow-700">{product.category}</p>
