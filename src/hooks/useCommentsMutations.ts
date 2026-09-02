@@ -1,5 +1,5 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { toast } from "react-hot-toast"
+import { toast } from "sonner"
 import type { CommentFormValues } from "../schemas/commentSchema";
 import { createComment, updateComment, deleteComment } from "../services/commentService";
 

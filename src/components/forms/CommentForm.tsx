@@ -12,16 +12,31 @@ interface CommentFormProps {
 
 export default function CommentForm({ productId, initialData, onSubmitForm, isLoading}: CommentFormProps) {
 
+    const defaultEmptyValues = {
+        productId,
+        author: "",
+        content: "",
+        rating: 5
+    };
+
     const {register, handleSubmit, reset, formState: { errors, isSubmitSuccessful}} =
         useForm<CommentFormValues>({resolver: zodResolver(commentSchema),
-                                    defaultValues: initialData || {productId, author: "", content: "", rating: 0}
+                                    defaultValues: initialData || defaultEmptyValues
         })
 
     useEffect(() => {
-        if (isSubmitSuccessful && !initialData) {
-            reset();
+        if (initialData) {
+            reset(initialData);
+        } else {
+            reset(defaultEmptyValues);
         }
-    }, [isSubmitSuccessful, initialData, reset])
+    }, [initialData, reset, productId]);
+
+    useEffect(() => {
+        if (isSubmitSuccessful && !initialData) {
+            reset(defaultEmptyValues);
+        }
+    }, [isSubmitSuccessful, initialData, reset, productId])
 
     const onSubmit = (data: CommentFormValues) => {
         onSubmitForm(data)
@@ -46,7 +61,7 @@ export default function CommentForm({ productId, initialData, onSubmitForm, isLo
                     <option value={2}>⭐⭐ Regular</option>
                     <option value={1}>⭐ No me gustó</option>
                 </select>
-                { errors.author && <span className="text-red-500 text-xs mt-1 block">{errors.author.message}</span>}
+                { errors.rating && <span className="text-red-500 text-xs mt-1 block">{errors.rating.message}</span>}
             </div>
 
             <div>

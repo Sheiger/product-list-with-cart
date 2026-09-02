@@ -128,9 +128,11 @@ const ProductDetail = () => {
                             )}
                         </div>
                         <CommentForm 
+                            key={editingComment?.id || 'new'}
                             productId={productId} 
+                            initialData={editingComment}
                             onSubmitForm={handleAddComment} 
-                            isLoading={createLocal.isPending} 
+                            isLoading={createLocal.isPending || updateLocal.isPending} 
                         />
                     </div>
                 </div>
