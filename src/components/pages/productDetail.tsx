@@ -2,10 +2,12 @@ import { useParams, Link } from "react-router-dom"
 import { useProduct } from "../../hooks/useProduct"
 import { useCommentsQueries } from "../../hooks/useCommentsQueries"
 import { useCommentsMutations } from "../../hooks/useCommentsMutations"
+import { useState } from "react"
 import type { CommentFormValues } from "../../schemas/commentSchema"
 import CommentForm  from "../forms/CommentForm"
 import ErrorState from "../states/ErrorState"
 import NotFound from "./notFound"
+import ConfirmDeleteComment from "../modals/ConfirmDeleteComment"
 
 
 const ProductDetail = () => {
@@ -13,13 +15,31 @@ const ProductDetail = () => {
     const {id} = useParams()
     const productId = Number(id)
 
+    const [editingComment, setEditingComment] = useState<CommentFormValues | undefined>(undefined) 
+    const [commentToDelete, setCommentToDelete] = useState<number | null>(null)
+
     const { data: product, isLoading: isLoadingProduct, isError: isErrorProduct, refetch: refetchProduct } = useProduct(productId);
-    
     const { data: comments, isLoading: isLoadingComments } = useCommentsQueries(productId);
-    const { createLocal, deleteLocal } = useCommentsMutations();
+    const { createLocal, updateLocal, deleteLocal } = useCommentsMutations();
 
     const handleAddComment = (data: CommentFormValues) => {
-        createLocal.mutate({ ...data, productId })
+        if (editingComment) {
+            updateLocal.mutate(
+                { id: editingComment.id!, payload: {...data, productId}},
+                { onSuccess: () => setEditingComment(undefined)}
+            )
+        } else {
+            createLocal.mutate({ ...data, productId })
+        }
+    }
+
+    const handleConfirmDelete = () => {
+        if (commentToDelete !== null) {
+            deleteLocal.mutate(
+                { id: commentToDelete, productId},
+                { onSuccess: () => setCommentToDelete(null)}
+            )
+        }
     }
 
     if (isLoadingProduct) 
@@ -68,12 +88,19 @@ const ProductDetail = () => {
                                             </span>
                                         </div>
                                         <p className="text-gray-600 mb-4 text-sm leading-relaxed">{comment.content}</p>
-                                        <button 
-                                            onClick={() => deleteLocal.mutate({ id: comment.id!, productId })}
-                                            className="text-xs font-semibold text-red-500 hover:text-red-700 transition-colors"
-                                        >
-                                            Eliminar
-                                        </button>
+                                        <div className="flex gap-4 mt-2">
+                                            <button 
+                                                onClick={() => setEditingComment(comment)}
+                                                className="text-xs font-semibold text-blue-500 hover:text-blue-700 transition-colors">
+                                                Editar
+                                            </button>
+                                            <button 
+                                                onClick={() => setCommentToDelete(comment.id!)}
+                                                className="text-xs font-semibold text-red-500 hover:text-red-700 transition-colors">
+                                                Eliminar
+                                            </button>
+                                        </div>
+                                        
                                     </li>
                                 ))}
                             </ul>
@@ -87,7 +114,19 @@ const ProductDetail = () => {
                     </div>
 
                     <div className="bg-white p-6 rounded-2xl shadow-sm border border-orange-100 h-fit">
-                        <h3 className="text-xl font-bold text-amber-900 mb-4">Deja tu comentario</h3>
+                        <div className="flex justify-between items-center mb-4">
+                            <h3 className="text-xl font-bold text-amber-900">
+                                {editingComment ? "Editar comentario" : "Deja tu comentario"}
+                            </h3>
+                            
+                            {editingComment && (
+                                <button 
+                                    onClick={() => setEditingComment(undefined)}
+                                    className="text-sm text-gray-500 hover:text-gray-700 underline">
+                                    Cancelar
+                                </button>
+                            )}
+                        </div>
                         <CommentForm 
                             productId={productId} 
                             onSubmitForm={handleAddComment} 
@@ -96,7 +135,14 @@ const ProductDetail = () => {
                     </div>
                 </div>
             </div>
-            
+            <ConfirmDeleteComment 
+                isOpen={commentToDelete !== null}
+                onClose={() => setCommentToDelete(null)}
+                onConfirm={handleConfirmDelete}
+                title="Eliminar Opinión"
+                message="¿Estás seguro de que deseas eliminar este comentario? Esta acción no se puede deshacer."
+                isPending={deleteLocal.isPending}
+            />
         </div>
     )
 }
