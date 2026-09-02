@@ -1,5 +1,4 @@
-//import { apiClient } from "./client"
-import axios from "axios"
+import { apiClient } from "./client"
 import type { Product } from "../interface/products"
 
 const ARTIFICIAL_DELAY = 1200;
@@ -30,8 +29,7 @@ export async function fetchProducts(filters: ProductFilters = {}): Promise<Produ
     if (category) params.category = category;
 
     const [response] = await Promise.all([
-        //apiClient.get("/products", { params }),
-        axios.get("/data.json", { params }),
+        apiClient.get("/products", { params }),
         delay(ARTIFICIAL_DELAY),
     ]);
 
