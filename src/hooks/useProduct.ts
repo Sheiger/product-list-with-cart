@@ -2,7 +2,7 @@ import { useState, useEffect, useCallback } from "react";
 import { fetchProductById } from "../api/productById";
 import type { Product } from "../interface/products";
 
-export function useProduct(id?: string) {
+export function useProduct(id?: number) {
     const [data, setData] = useState<Product | null>(null)
     const [isLoading, setIsLoading] = useState<boolean>(true)
     const [isError, setIsError] = useState<boolean>(false)

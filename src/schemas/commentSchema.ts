@@ -5,7 +5,7 @@ export const commentSchema = z.object({
     productId: z.number(),
     author: z.string().min(3, "El nombre debe tener al menos 3 caracteres"),
     content: z.string().min(10, "El comentario debe ser mas descriptivo"),
-    reting: z.number().min(1).max(5)
+    rating: z.number().min(1).max(5)
 })
 
 export type CommentFormValues = z.infer<typeof commentSchema>;
